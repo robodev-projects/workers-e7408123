@@ -3,7 +3,7 @@ name: Test Templates
 on:
   push:
     branches:
-      - 'v4/robodev'
+      - 'v5/orion'
 
 jobs:
   test:

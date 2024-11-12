@@ -1,7 +1,7 @@
-## Configuration for STAGE=robodev-api-dev
-##  - robodev-api-dev.api.template.yml is commited to git and uses ${} functions
-##  - robodev-api-dev.api.resolved.yml is generated on "yarn bootstrap --stage robodev-api-dev"
-##  - robodev-api-dev.api.override.yml can be used for local overrides
+## Configuration for STAGE=orion-api-dev
+##  - orion-api-dev.api.template.yml is commited to git and uses ${} functions
+##  - orion-api-dev.api.resolved.yml is generated on "yarn bootstrap --stage orion-api-dev"
+##  - orion-api-dev.api.override.yml can be used for local overrides
 
 core:
   stage: ${func:stage}
