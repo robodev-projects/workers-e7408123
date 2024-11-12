@@ -1,0 +1,168 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../../node_modules/.prisma/client"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid()) @db.Uuid
+
+  email            String?
+  name             String?
+  roles            String[]
+  profilePictureId String?  @unique @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuthnIdentity {
+  id String @id @default(uuid()) @db.Uuid
+
+  // provider of the authentication
+  //  local, auth0, google
+  provider   String
+  // provider specific id
+  //  sub, email
+  providerId String
+
+  // type of user
+  //  defines the allowed providers and other options
+  type   String
+  userId String @db.Uuid
+
+  // disabled by the resource
+  disabled Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // users are resolved by the provider,
+  //  only one user/auth per providerId is allowed
+  @@unique([provider, providerId])
+}
+
+model LocalAuthnIdentity {
+  id String @id @default(uuid()) @db.Uuid
+
+  email    String  @unique
+  password String?
+
+  // magic link token
+  magicLinkCode          String?
+  magicLinkCodeExpiresAt DateTime?
+
+  // if magic-link creation, the email is disabled until the link is used
+  disabled Boolean @default(false)
+
+  // account is validated when the email is confirmed
+  validated Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PushNotificationToken {
+  id String @id @default(uuid()) @db.Uuid
+
+  // module specific meta data or generic name
+  resourceName String
+
+  token     String
+  provider  String
+  expiresAt DateTime?
+
+  title String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  // globally unique id
+  id String @id @default(uuid()) @db.Uuid
+
+  // provider unique key
+  key      String @unique
+  provider String
+
+  // module specific meta data or generic name
+  resourceName String
+
+  // provider specific meta data
+  meta Json? @db.JsonB
+
+  fileName String
+  fileSize Int
+  mimeType String
+
+  // status
+  uploaded  Boolean @default(false)
+  validated Boolean @default(false)
+
+  // actual files, only with postgres provider, not for heavy use
+  blob Bytes? @db.ByteA
+
+  // accounting
+  module     String?
+  type       String?
+  resourceId String?  @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String?  @db.Uuid
+}
+
+model EmailTemplate {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  description String?
+  label       String
+  subject     String
+  content     String
+  contentType String
+  textContent String?
+  type        String?
+  style       String?
+
+  @@unique([type])
+}
+
+model KVStoreItem {
+  key       String
+  namespace String
+  value     Json
+  expiresAt DateTime
+
+  @@id([key, namespace])
+}
+
+model Rocket {
+  id        String  @id @default(uuid()) @db.Uuid
+  name      String  @unique
+  model     String
+  pictureId String? @unique @db.Uuid
+
+  timelapses RocketTimelapse[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RocketTimelapse {
+  id String @id @default(uuid()) @db.Uuid
+
+  pictureId String @unique @db.Uuid
+
+  rocketId String @db.Uuid
+  rocket   Rocket @relation(fields: [rocketId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

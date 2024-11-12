@@ -1,0 +1,56 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node16",
+    "module": "Node16",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "ES2022",
+    "lib": [
+      "ES2022"
+    ],
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": false,
+    "resolveJsonModule": true,
+    "alwaysStrict": true,
+    "paths": {
+      "~*": [
+        "./src/*"
+      ],
+      "~test/*": [
+        "./test/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/.*.scaffold.ts",
+    "**/.scaffold.ts",
+    "**/.scaffold/*",
+    "packages",
+    "src/common/logger/pino",
+    "src/common/logger/otel",
+    "src/common/logger/sentry",
+    "src/common/email/providers/aws-ses",
+    "src/common/email/providers/sendgrid",
+    "src/common/queues/providers/pg-boss",
+    "src/common/media/providers/aws-s3",
+    "src/common/authn/providers/auth0",
+    "src/common/authn/providers/google",
+    "src/common/push-notifications/providers/fcm",
+    "src/common/kvstore/providers/keyv"
+  ]
+}

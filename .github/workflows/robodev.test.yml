@@ -1,0 +1,31 @@
+name: Test Templates
+
+on:
+  push:
+    branches:
+      - 'v4/robodev'
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    services:
+      # test database
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_PASSWORD: admin
+          POSTGRES_USER: admin
+          POSTGRES_DB: orion-api
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/test

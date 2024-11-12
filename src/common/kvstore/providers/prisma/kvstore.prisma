@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model KVStoreItem {
+  key       String
+  namespace String
+  value     Json
+  expiresAt DateTime
+
+  @@id([key, namespace])
+}

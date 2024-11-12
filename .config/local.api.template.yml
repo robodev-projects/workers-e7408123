@@ -1,0 +1,63 @@
+## Configuration for STAGE=local
+##  - local.api.template.yml is commited to git and uses ${} functions
+##  - local.api.resolved.yml is generated on "yarn bootstrap --stage local"
+##  - local.api.override.yml can be used for local overrides
+
+core:
+  stage: ${func:stage}
+  release: ${func:release}
+  webBaseUrl: 'http://localhost:8000'
+  apiBaseUrl: 'http://localhost:3000'
+  service: orion-api
+
+http:
+  log: true
+  port: 3000
+  host: 0.0.0.0
+  validateResponse: warn
+  cors:
+    origin: ",,,"
+    maxAge: 3600
+  openapi:
+    mode: runtime
+    path: docs
+    title: Orion API
+    description: Povio Orion Nest.js Framework
+
+
+logger:
+  output: console
+  level: debug # default log level
+  contexts:
+    # per context log level
+    InstanceLoader: warn
+    RouterExplorer: warn
+    HttpException: log
+
+prisma:
+  url: postgresql://admin:admin@localhost:5432/orion-api
+  log:
+    - query
+    - info
+    - warn
+    - error
+
+authn:
+  jwt:
+    secret: 'random secret'
+    accessTokenExpiration: 300
+    refreshTokenExpiration: 604800
+  session:
+    extendRefreshToken: true
+  local:
+    passwords:
+      registration: true
+    refreshToken: true
+
+email:
+  mode: disabled
+  defaultFrom: info@example.com
+
+media:
+  prisma:
+    secret: 'random-secret'

@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Media {
+  // globally unique id
+  id String @id @default(uuid()) @db.Uuid
+
+  // provider unique key
+  key      String @unique
+  provider String
+
+  // module specific meta data or generic name
+  resourceName String
+
+  // provider specific meta data
+  meta Json? @db.JsonB
+
+  fileName String
+  fileSize Int
+  mimeType String
+
+  // status
+  uploaded  Boolean @default(false)
+  validated Boolean @default(false)
+
+  // actual files, only with postgres provider, not for heavy use
+  blob Bytes? @db.ByteA
+
+  // accounting
+  module     String?
+  type       String?
+  resourceId String?  @db.Uuid
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String?  @db.Uuid
+}

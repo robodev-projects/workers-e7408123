@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Rocket {
+  id        String  @id @default(uuid()) @db.Uuid
+  name      String  @unique
+  model     String
+  pictureId String? @unique @db.Uuid
+
+  timelapses RocketTimelapse[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RocketTimelapse {
+  id String @id @default(uuid()) @db.Uuid
+
+  pictureId String @unique @db.Uuid
+
+  rocketId String @db.Uuid
+  rocket   Rocket @relation(fields: [rocketId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

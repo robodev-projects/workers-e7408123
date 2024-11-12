@@ -1,0 +1,28 @@
+name: 'Run Tests'
+description: 'Run unit and e2e tests'
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: Enable Corepack
+      shell: bash
+      run: corepack enable
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        cache: yarn
+
+    - name: Install
+      shell: bash
+      run: yarn
+
+    - name: Run tests
+      shell: bash
+      run: yarn test
+
+    - name: Run linter
+      shell: bash
+      run: yarn lint

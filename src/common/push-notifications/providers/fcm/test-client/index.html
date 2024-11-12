@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCM Push Notification Example</title>
+</head>
+<body>
+<h1>FCM Push Notification Example</h1>
+<div id="token"></div>
+<div id="message"></div>
+
+<!-- Include Firebase App (the core Firebase SDK) and Firebase Messaging -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: 'AIzaSyCfgh1wvVd6NL0KgSUvTHJLheup0NuKsww',
+    authDomain: 'povio-orion.firebaseapp.com',
+    projectId: 'povio-orion',
+    storageBucket: 'povio-orion.appspot.com',
+    messagingSenderId: '849358396114',
+    appId: '1:849358396114:web:3b6f8f1c4f314cbfa6ab0b',
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Get messaging object
+  const messaging = firebase.messaging();
+
+  // Function to request permission and get token
+  async function requestPermissionAndGetToken() {
+    try {
+      // Request permission
+      await Notification.requestPermission();
+      console.log('Notification permission granted.');
+
+      // Get token
+      const token = await messaging.getToken();
+      console.log('FCM Token:', token);
+      document.getElementById('token').textContent = `FCM Token: ${token}`;
+    } catch (err) {
+      console.log('Unable to get permission to notify or token.', err);
+    }
+  }
+
+  // Call the function to request permission and get token
+  requestPermissionAndGetToken();
+
+  // Handle incoming messages
+  messaging.onMessage((payload) => {
+    console.log('Message received:', payload);
+    document.getElementById('message').textContent = `Received message: ${JSON.stringify(payload)}`;
+  });
+</script>
+</body>
+</html>

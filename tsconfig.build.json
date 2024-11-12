@@ -1,0 +1,30 @@
+{
+  "include": [
+    "src/**/*.ts"
+  ],
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "**/*.unit.ts",
+    "**/*.fixture.ts",
+    "**/*.mock.ts",
+    "**/*.e2e.ts",
+    "**/.*.scaffold.ts",
+    "**/.scaffold.ts",
+    "**/.scaffold/*",
+    "packages",
+    "src/common/logger/pino",
+    "src/common/logger/otel",
+    "src/common/logger/sentry",
+    "src/common/email/providers/aws-ses",
+    "src/common/email/providers/sendgrid",
+    "src/common/queues/providers/pg-boss",
+    "src/common/media/providers/aws-s3",
+    "src/common/authn/providers/auth0",
+    "src/common/authn/providers/google",
+    "src/common/push-notifications/providers/fcm",
+    "src/common/kvstore/providers/keyv"
+  ]
+}

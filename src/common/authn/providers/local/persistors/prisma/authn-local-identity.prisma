@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model LocalAuthnIdentity {
+  id String @id @default(uuid()) @db.Uuid
+
+  email    String  @unique
+  password String?
+
+  // magic link token
+  magicLinkCode          String?
+  magicLinkCodeExpiresAt DateTime?
+
+  // if magic-link creation, the email is disabled until the link is used
+  disabled Boolean @default(false)
+
+  // account is validated when the email is confirmed
+  validated Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

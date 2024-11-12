@@ -1,0 +1,46 @@
+## Configuration for STAGE=robodev-api-dev
+##  - robodev-api-dev.api.template.yml is commited to git and uses ${} functions
+##  - robodev-api-dev.api.resolved.yml is generated on "yarn bootstrap --stage robodev-api-dev"
+##  - robodev-api-dev.api.override.yml can be used for local overrides
+
+core:
+  stage: ${func:stage}
+  release: ${func:release}
+  buildAt: ${env:BUILD_TIMESTAMP}
+  service: orion-api
+http:
+  openapi:
+    title: Orion API
+    description: Povio Orion Nest.js Framework
+  port: ${env:PORT}
+  host: 0.0.0.0
+  log: true
+  validateResponse: warn
+  cors:
+    origin: true
+email:
+  mode: enabled
+  defaultFrom: info@example.com
+prisma:
+  url: ${env:DATABASE_URL}
+  log:
+    - info
+    - warn
+    - error
+  autoMigrate: true
+logger:
+  output: json
+  level: log
+  contexts:
+    Bootstrap: warn
+    HttpException: warn
+    ExceptionHandler: debug
+    RoutesResolver: warn
+    RouterExplorer: warn
+    NestApplication: warn
+
+media:
+  awsS3:
+    bucket: ${env:MEDIA_BUCKET}
+    prefix: uploads/
+    publicUrl: ${env:MEDIA_PUBLIC_URL}
