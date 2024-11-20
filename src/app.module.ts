@@ -21,10 +21,11 @@ import { HotwireQueuePlugin } from '~common/queues/providers/hotwire';
 import { PrismaModule } from '~database/prisma';
 
 import { MediaLibraryModule } from '~modules/media-library';
-import { RocketModule } from '~modules/rocket';
 import { UserModule } from '~modules/user';
 import { UserAccountModule } from '~modules/user/account';
 import { UserDirectoryModule } from '~modules/user/directory';
+import { WorkerStatesModule } from '~modules/worker-states/worker-states.module';
+import { WorkersModule } from '~modules/workers/workers.module';
 
 @Module({
   imports: [
@@ -52,7 +53,8 @@ import { UserDirectoryModule } from '~modules/user/directory';
 
     // controller-based modules
     MediaLibraryModule,
-    RocketModule,
+    WorkersModule,
+    WorkerStatesModule,
   ],
 })
 export class AppModule {}
