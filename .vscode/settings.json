@@ -21,7 +21,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.fixAll.tslint": "always",
-    "source.fixAll.stylelint": "always"
+    "source.fixAll.stylelint": "always",
+    "source.organizeImports": "always"
   },
   "eslint.enable": true,
   "eslint.workingDirectories": [{ "mode": "auto" }],

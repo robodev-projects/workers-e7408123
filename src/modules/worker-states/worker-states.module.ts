@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { WorkerStatePairService } from '~modules/worker-states/worker-state-pair.service';
 import { WorkerStateService } from '~modules/worker-states/worker-state.service';
-import { WorkersController } from '~modules/worker-states/workers.controller';
+import { WorkerStatesController } from '~modules/worker-states/worker-states.controller';
 import { WorkersUseCase } from '~modules/worker-states/workers.use-case';
 import { WorkersModule } from '~modules/workers/workers.module';
 
@@ -13,7 +13,7 @@ import { WorkerStateRepository } from './worker-state.repository';
 
 @Module({
   imports: [WorkersModule],
-  controllers: [WorkersController],
+  controllers: [WorkerStatesController],
   providers: [
     {
       provide: WorkerStateRepository,

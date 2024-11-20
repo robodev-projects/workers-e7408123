@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IWorkerStatePairEntity } from 'src/modules/worker-states/interfaces/worker-state-pair-entity.interface';
 import { WorkerStatePairRepository } from 'src/modules/worker-states/worker-state-pair.repository';
 
-import { NotFoundException } from '~common/exceptions';
 import { LoggerService } from '~common/logger';
 
 @Injectable()
@@ -21,7 +20,7 @@ export class WorkerStatePairService {
     return await this.workerStatePairRepository.createWorkerStatePair(workerId, assignedWorkerStateId, assignedAt);
   }
 
-  async findLastOpenWorkerStatePair(workerId: string): Promise<IWorkerStatePairEntity | null> {
+  async findLastOpenWorkerStatePair(workerId: string): Promise<IWorkerStatePairEntity | undefined> {
     return await this.workerStatePairRepository.findLastOpenWorkerStatePair(workerId);
   }
 
@@ -31,11 +30,6 @@ export class WorkerStatePairService {
     unassignedWorkerStateId: string,
     unassignedAt: Date,
   ): Promise<void> {
-    const existingPair = await this.workerStatePairRepository.findLastOpenWorkerStatePair(pairId);
-    if (!existingPair) {
-      throw new NotFoundException('Worker state pair not found.', 'WORKER_STATE_PAIR_NOT_FOUND');
-    }
-
     await this.workerStatePairRepository.updateWorkerStatePair(
       pairId,
       totalSeconds,
@@ -66,12 +60,6 @@ export class WorkerStatePairService {
       from,
       to,
     );
-    if (!workerStatePairs || workerStatePairs.length === 0) {
-      throw new NotFoundException(
-        'No worker state pairs found starting in range and ending after.',
-        'WORKER_STATE_PAIRS_NOT_FOUND',
-      );
-    }
     return workerStatePairs;
   }
 
@@ -85,12 +73,6 @@ export class WorkerStatePairService {
       from,
       to,
     );
-    if (!workerStatePairs || workerStatePairs.length === 0) {
-      throw new NotFoundException(
-        'No worker state pairs found starting before and ending after the range.',
-        'WORKER_STATE_PAIRS_NOT_FOUND',
-      );
-    }
     return workerStatePairs;
   }
 }

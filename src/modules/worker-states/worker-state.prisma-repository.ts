@@ -5,15 +5,18 @@ import { WorkerStateRepository } from 'src/modules/worker-states/worker-state.re
 
 import { PrismaService } from '~database/prisma';
 
+import { ICreateState } from './interfaces/create-state.interface';
+
 @Injectable()
 export class WorkerStatePostgresRepository implements WorkerStateRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createWorkerState(workerId: string, state: string): Promise<IWorkerStateEntity> {
+  async createWorkerState(workerId: string, create: ICreateState): Promise<IWorkerStateEntity> {
     const workerState = await this.prisma.client.workerState.create({
       data: {
         workerId,
-        state,
+        state: create.state,
+        createdAt: create.createdAt,
       },
     });
     return this.toDomain(workerState);

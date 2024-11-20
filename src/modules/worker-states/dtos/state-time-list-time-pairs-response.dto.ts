@@ -2,11 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
 import { IsArray, IsNumber, ValidateNested } from 'class-validator';
 
-import { StateTimePairResponseDto } from '../dtos/state-time-pair-response.dto';
-import {
-  IStateTimeListTimePairsResponse,
-  IStateTimePairResponse,
-} from '../interfaces/state-time-list-time-pairs-response.interface';
+import { IStateTimeListTimePairsResponse } from '../interfaces/state-time-list-time-pairs-response.interface';
+import { StateTimePairResponseDto } from './state-time-pair-response.dto';
 
 export class StateTimeListTimePairsResponseDto {
   constructor(data: Partial<StateTimeListTimePairsResponseDto>) {
@@ -30,12 +27,5 @@ export class StateTimeListTimePairsResponseDto {
       timePairs: data.timePairs.map(StateTimePairResponseDto.fromDomain),
       totalSeconds: data.totalSeconds,
     });
-  }
-
-  toDomain(): IStateTimeListTimePairsResponse {
-    return {
-      timePairs: this.timePairs.map((pair) => pair.toDomain()),
-      totalSeconds: this.totalSeconds,
-    };
   }
 }

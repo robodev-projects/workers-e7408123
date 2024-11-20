@@ -24,7 +24,7 @@ export class WorkerStatePairPostgresRepository implements WorkerStatePairReposit
     return this.toDomain(workerStatePair);
   }
 
-  async findLastOpenWorkerStatePair(workerId: string): Promise<IWorkerStatePairEntity | null> {
+  async findLastOpenWorkerStatePair(workerId: string): Promise<IWorkerStatePairEntity | undefined> {
     const workerStatePair = await this.prisma.client.workerStatePair.findFirst({
       where: {
         workerId,
@@ -34,7 +34,7 @@ export class WorkerStatePairPostgresRepository implements WorkerStatePairReposit
         assignedAt: 'desc',
       },
     });
-    return workerStatePair ? this.toDomain(workerStatePair) : null;
+    return workerStatePair ? this.toDomain(workerStatePair) : undefined;
   }
 
   async updateWorkerStatePair(

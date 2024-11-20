@@ -6,7 +6,7 @@ export abstract class WorkerStatePairRepository {
     assignedWorkerStateId: string,
     assignedAt: Date,
   ): Promise<IWorkerStatePairEntity>;
-  abstract findLastOpenWorkerStatePair(workerId: string): Promise<IWorkerStatePairEntity | null>;
+  abstract findLastOpenWorkerStatePair(workerId: string): Promise<IWorkerStatePairEntity | undefined>;
   abstract updateWorkerStatePair(
     pairId: string,
     totalSeconds: number,

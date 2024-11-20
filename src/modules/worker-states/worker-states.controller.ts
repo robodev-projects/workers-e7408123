@@ -1,5 +1,5 @@
-import { Controller, Post, Body, Param, Get, Query } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthnIdentity, IAuthnIdentity } from '~common/authn';
 
@@ -12,7 +12,7 @@ import { WorkersUseCase } from '~modules/worker-states/workers.use-case';
 
 @ApiTags('Workers')
 @Controller('workers')
-export class WorkersController {
+export class WorkerStatesController {
   constructor(private readonly workersUseCase: WorkersUseCase) {}
 
   @Post('/:workerId/states')
@@ -23,7 +23,7 @@ export class WorkersController {
     @Param('workerId') workerId: string,
     @Body() createStateDto: CreateStateDto,
   ): Promise<StateResponseDto> {
-    const stateResponse = await this.workersUseCase.createWorkerState(auth.userId, createStateDto.toDomain());
+    const stateResponse = await this.workersUseCase.createWorkerState(workerId, createStateDto.toDomain());
     return StateResponseDto.fromDomain(stateResponse);
   }
 

@@ -4,5 +4,3 @@ export interface IStateTimeListTimePairsResponse {
   timePairs: IStateTimePairResponse[];
   totalSeconds: number;
 }
-
-export { IStateTimePairResponse }; // Ensure IStateTimePairResponse is exported
