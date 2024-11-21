@@ -28,13 +28,16 @@ export class WorkerStatePairPostgresRepository implements WorkerStatePairReposit
     const workerStatePair = await this.prisma.client.workerStatePair.findFirst({
       where: {
         workerId,
-        unassignedAt: null,
       },
       orderBy: {
         assignedAt: 'desc',
       },
     });
-    return workerStatePair ? this.toDomain(workerStatePair) : undefined;
+    if (workerStatePair && workerStatePair.unassignedAt === null) {
+      return this.toDomain(workerStatePair);
+    }
+
+    return undefined;
   }
 
   async updateWorkerStatePair(
@@ -60,6 +63,7 @@ export class WorkerStatePairPostgresRepository implements WorkerStatePairReposit
         assignedAt: {
           gte: from,
         },
+        unassignedAt: { not: null },
         OR: [
           {
             unassignedAt: {
@@ -113,6 +117,7 @@ export class WorkerStatePairPostgresRepository implements WorkerStatePairReposit
           gte: from,
           lte: to,
         },
+        unassignedAt: { not: null },
         OR: [
           {
             unassignedAt: {
@@ -142,6 +147,7 @@ export class WorkerStatePairPostgresRepository implements WorkerStatePairReposit
         assignedAt: {
           lt: from,
         },
+        unassignedAt: { not: null },
         OR: [
           {
             unassignedAt: {

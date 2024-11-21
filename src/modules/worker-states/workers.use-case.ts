@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 
-import { NotFoundException } from '~common/exceptions';
 import { LoggerService } from '~common/logger';
 
 import { WorkerService } from '../workers/worker.service';
@@ -58,10 +57,6 @@ export class WorkersUseCase {
 
   async getWorkerStates(workerId: string): Promise<IStateListResponse> {
     const workerStates = await this.workerStateService.getWorkerStatesByWorkerId(workerId);
-
-    if (!workerStates || workerStates.length === 0) {
-      throw new NotFoundException(`No states found for worker with ID: ${workerId}`);
-    }
 
     const stateResponses: IStateResponse[] = workerStates.map((state) => ({
       id: state.id,

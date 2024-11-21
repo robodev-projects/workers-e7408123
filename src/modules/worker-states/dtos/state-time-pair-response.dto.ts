@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsDate, IsNumber } from 'class-validator';
+import { IsDate, IsNumber, IsOptional } from 'class-validator';
 
 import { IStateTimePairResponse } from '../interfaces/state-time-pair-response.interface';
 
@@ -27,11 +27,13 @@ export class StateTimePairResponseDto {
   @Expose()
   @ApiProperty({ description: 'Start time of the time pair' })
   @IsDate()
+  @IsOptional()
   readonly cutStartTime!: Date | null;
 
   @Expose()
   @ApiProperty({ description: 'End time of the time pair' })
   @IsDate()
+  @IsOptional()
   readonly cutEndTime!: Date | null;
 
   static fromDomain(data: IStateTimePairResponse): StateTimePairResponseDto {

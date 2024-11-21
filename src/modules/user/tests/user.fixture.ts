@@ -1,4 +1,4 @@
-import { User, PrismaClient } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 
 import { makeUUID } from '~common/utils/short-uuid';
 

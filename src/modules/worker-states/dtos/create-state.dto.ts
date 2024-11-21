@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 
 import { State } from '../enums/state.enum';
 import { ICreateState } from '../interfaces/create-state.interface';
@@ -18,7 +18,8 @@ export class CreateStateDto {
   @Expose()
   @ApiProperty({ description: 'Created At' })
   @IsString()
-  readonly createdAt!: Date;
+  @IsOptional()
+  readonly createdAt?: Date;
 
   static fromDomain(state: State): CreateStateDto {
     return new CreateStateDto({ state });
