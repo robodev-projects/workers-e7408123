@@ -22,7 +22,6 @@ import { PrismaEphemeralModule } from '~database/prisma/prisma.ephemeral.module'
 import { MediaLibraryModule } from '~modules/media-library';
 import { UserModule } from '~modules/user';
 import { UserAccountModule } from '~modules/user/account';
-import { UserDirectoryModule } from '~modules/user/directory';
 
 import { requestPipes } from '~app.pipes';
 
@@ -42,7 +41,6 @@ export const AppTestingModule: () => ModuleMetadata = () => ({
     MediaLibraryModule,
     UserModule,
     UserAccountModule,
-    UserDirectoryModule,
   ],
 });
 

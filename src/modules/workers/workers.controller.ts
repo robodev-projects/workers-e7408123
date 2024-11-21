@@ -1,7 +1,5 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
-
-import { AuthnIdentity, IAuthnIdentity } from '~common/authn';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthenticatedUser } from '~modules/user';
 import { CreateWorkerRequestDto } from '~modules/workers/dtos/create-worker-request.dto';
